@@ -1,10 +1,10 @@
 // Declare constants
-const FRAME_HEIGHT = 300;
-const FRAME_WIDTH = 300;
-const MARGINS = {left: 40, right: 40, top: 40, bottom: 40}
+const FRAME_HEIGHT = 500;
+const FRAME_WIDTH = 500;
+const MARGINS = {left: 50, right: 50, top: 50, bottom: 50};
 
-const VIS_HEIGHT = FRAME_HEIGHT - MARGINS.top - MARGINS.bottom
-const VIS_WIDTH = FRAME_WIDTH - MARGINS.left - MARGINS.right
+const VIS_HEIGHT = FRAME_HEIGHT - MARGINS.top - MARGINS.bottom;
+const VIS_WIDTH = FRAME_WIDTH - MARGINS.left - MARGINS.right;
 
 // Frame1: scatter plot for length
 const FRAME1 = d3.select("#length") 
@@ -15,14 +15,13 @@ const FRAME1 = d3.select("#length")
 
 function scattor_length_plot(){
 	d3.csv("data/iris.csv").then((data) => {
-
 		// scale functions
 		const X_SCALE = d3.scaleLinear()
-							.domain([0, (d3.max(data, (d) => {return d.Petal_Length})) + 1])
+							.domain([0, (d3.max(data, (d) => {return d.Sepal_Length})) + 1])
 							.range([0, VIS_WIDTH]); 
 
 		const Y_SCALE = d3.scaleLinear()
-							.domain([0, (d3.max(data, (d) => {return d.Sepal_Length})) + 1])
+							.domain([0, (d3.max(data, (d) => {return d.Petal_Length})) + 1])
 							.range([VIS_WIDTH, 0]);
 
 		// create data points
@@ -31,13 +30,13 @@ function scattor_length_plot(){
 				.enter()
 				.append("circle")
 					.attr('cx', (d) => {
-						return (X_SCALE(d.Petal_Length) + MARGINS.left)
+						return (X_SCALE(d.Sepal_Length) + MARGINS.left)
 					})
 					.attr("cy", (d) => {
-						return (Y_SCALE(d.Sepal_Length) + MARGINS.top)
+						return (Y_SCALE(d.Petal_Length) + MARGINS.top)
 					})
 					.attr("r", 6)
-					.attr('class', 'point');
+					.attr('class', (d) => {return d.Species});
 
 		// create x and y axes
 		FRAME1.append("g")
@@ -58,10 +57,8 @@ function scattor_length_plot(){
 			    .style("text-anchor", "middle")
 			    .text("Petal_Length vs. Sepal_Length");
 
-	})
-}
-
-scattor_length_plot();
+	});
+};
 
 // Frame2: scatter plot for width
 const FRAME2 = d3.select('#width')
@@ -75,11 +72,11 @@ function scattor_width_plot(){
 
 		// scale functions
 		const X_SCALE2 = d3.scaleLinear()
-							.domain([0, (d3.max(data, (d) => {return d.Petal_Width})) + 1])
+							.domain([0, (d3.max(data, (d) => {return d.Sepal_Width})) + 1])
 							.range([0, VIS_WIDTH]); 
 
 		const Y_SCALE2 = d3.scaleLinear()
-							.domain([0, (d3.max(data, (d) => {return d.Sepal_Width})) + 1])
+							.domain([0, (d3.max(data, (d) => {return d.Petal_Width})) + 1])
 							.range([VIS_WIDTH, 0]);
 
 		// create data points
@@ -88,13 +85,13 @@ function scattor_width_plot(){
 				.enter()
 				.append("circle")
 					.attr('cx', (d) => {
-						return (X_SCALE(d.Petal_Width) + MARGINS.left)
+						return (X_SCALE2(d.Sepal_Width) + MARGINS.left)
 					})
 					.attr("cy", (d) => {
-						return (Y_SCALE(d.Sepal_Width) + MARGINS.top)
+						return (Y_SCALE2(d.Petal_Width) + MARGINS.top)
 					})
 					.attr("r", 6)
-					.attr('class', 'point');
+					.attr('class', (d) => {return d.Species});
 
 		// create x and y axes
 		FRAME2.append("g")
@@ -115,10 +112,8 @@ function scattor_width_plot(){
 			    .style("text-anchor", "middle")
 			    .text("Petal_Width vs. Sepal_Width");
 
-	})
-}
-
-scattor_width_plot();
+	});
+};
 
 // Frame3: bar chart for species count
 const FRAME3 = d3.select('#bar')
@@ -152,7 +147,7 @@ function bar_plot() {
 			        .attr('width', X_SCALE3.bandwidth())
 			        .attr('height', (d) => {
 			          return (VIS_HEIGHT - Y_SCALE3(50))})
-			        .attr('class', 'bar');
+			        .attr('class', (d) => {return d.Species});
 
 		// create x and y axes
 		FRAME3.append("g")
@@ -172,17 +167,10 @@ function bar_plot() {
 			    .attr("y", MARGINS.top / 2)
 			    .style("text-anchor", "middle")
 			    .text("Counts of Sepecies");
-	})
-}
+	});
+};
 
-// Group the data by species
-		// const nestedData = d3.nest()
-		    					// .key(function(d) { return d.species; })
-		    					// .entries(data);
-
-		  // Count the number of items in each group
-		// const countedData = nestedData.map(function(d) {
-			// return {
-		      // species: d.key,
-		      // count: d3.sum(d.values, function(v) { return v.count; });
+// call the functions
+scattor_length_plot();
+scattor_width_plot();
 bar_plot();
