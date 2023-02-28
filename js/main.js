@@ -33,18 +33,18 @@ function build_plot(){
 							.range([VIS_HEIGHT, 0]);
 
 		// create data points
-		FRAME1.selectAll("points")
-				.data(data)
-				.enter()
-				.append("circle")
-					.attr('cx', (d) => {
-						return (X_SCALE(d.Sepal_Length) + MARGINS.left)
-					})
-					.attr("cy", (d) => {
-						return (Y_SCALE(d.Petal_Length) + MARGINS.top)
-					})
-					.attr("r", 6)
-					.attr('class', (d) => {return d.Species});
+		let myCircle1 = FRAME1.selectAll("points")
+					.data(data)
+					.enter()
+					.append("circle")
+						.attr('cx', (d) => {
+							return (X_SCALE(d.Sepal_Length) + MARGINS.left)
+						})
+						.attr("cy", (d) => {
+							return (Y_SCALE(d.Petal_Length) + MARGINS.top)
+						})
+						.attr("r", 6)
+						.attr('class', (d) => {return d.Species});
 
 		// create x and y axes
 		FRAME1.append("g")
@@ -130,11 +130,10 @@ function build_plot(){
 			.on("start brush", updateChart)
 		);
 
-		function updateChart() {
+		function updateChart(event) {
 	    extent = event.selection;
-	    console.log(extent)
-	    myCircle2.classed("selected", function(d){return isBrushed(extent, X_SCALE2(d.Sepal_Length) +MARGINS.left, Y_SCALE2(d.Petal_Length)+MARGINS.top)})
-		}
+	    myCircle2.classed("selected", function(d){return isBrushed(extent, X_SCALE2(d.Sepal_Width) +MARGINS.left, Y_SCALE2(d.Petal_Width)+MARGINS.top)})
+		};
 
 		// A function that return TRUE or FALSE according if a dot is in the selection or not
 		function isBrushed(brush_coords, cx, cy) {

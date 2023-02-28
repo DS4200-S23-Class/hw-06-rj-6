@@ -33,5 +33,5 @@ body {
 .selected {
 	stroke-width: 4px;
   stroke: orange;
-  opacity: 1;
+  opacity: 75%;
 }
