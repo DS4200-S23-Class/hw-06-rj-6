@@ -23,7 +23,7 @@ The purpose of this assignment is to practice creating a coordinated, multiview 
    - Add a title: "hw-06".
    - Add a centered header: "hw-06 - D3 Brushing & Linking".
    - Create three columns on your webpage, they should be even thirds of the page.
-   - In the left column, use D3 to create a Petal_Length vs Sepal_Length scatterplot. Choose three appropriate colors (think about color maps and data types) to represent the species of each point. Color points accordingly, with 50% opacity. Your chart does not need axis titles, but do add a header to title the chart.   
+   - In the left column, use D3 to create a Petal_Length vs Sepal_Length scatterplot. Choose three appropriate colors (think about color maps and data types) to represent the species of each point. Color points accordingly, with 50% opacity. Your chart does not need axis titles, but do add a header to title the chart.
    - In the middle column, use D3 to create a Petal_Width vs Sepal_Width scatterplot. Color points as you did for the first scatterplot. Your chart does not need axis titles, but do add a header to title the chart. 
    - In the right column, create a bar chart that shows count of each iris species in the dataset. There are 50 of each type, and you may hard code the data for this plot. Color bars to match the coloring of points in the scatterplots. Your chart does not need axis titles, but do add a header to title the chart.  
    - Finally, add brushing and linking. 
