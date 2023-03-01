@@ -27,12 +27,12 @@ const FRAME3 = d3.select('#bar')
 		            		.attr('width', FRAME_WIDTH)
 		            		.attr('class', 'bar-chart');
 
-// Define the X_SCALE and Y_SCALE in the global scope in order to use it in scatterWidth function
-let X_SCALE, Y_SCALE;
+// function for builidng scatter plot (Sepal_length vs. Petal_Length)
 function scatterLength(){
 
 	d3.csv("data/iris.csv").then((data) => {
 
+		// find the maximum x and y in this corresponding length col, and return as a rounded integer
 		MAX_X = d3.max(data, (d) => {return parseInt(d.Sepal_Length)});
 		MAX_Y = d3.max(data, (d) => {return parseInt(d.Petal_Length)});
 
@@ -75,13 +75,13 @@ function scatterLength(){
 	});
 }
 
-// Define the X_SCALE3 and Y_SCALE3 in the global scope 
-// in order to use it later in the scatterWidth function
-let X_SCALE3, Y_SCALE3;
+// function for builidng bar plot (count of species)
 function barPlot() {
+
+	// create the data for species
 	const data = [{Species: 'versicolor'}, {Species: 'virginica'}, {Species: 'setosa'}];
 
-		// scale functions
+	// scale functions
 	X_SCALE3 = d3.scaleBand()
 					.domain(data.map((d) => {return d.Species}))
 	  				.range([0, VIS_WIDTH])
@@ -124,13 +124,14 @@ function barPlot() {
 			.enter()
 	})
 
-
 }
 
+// function for builidng scatter plot (Sepal_Width vs. Petal_Width)
 function scatterWidth() {
 
 	d3.csv("data/iris.csv").then((data) => {
 
+		// find the maximum x and y in the corresponding width col, and return as a rounded integer
 		MAX_X2 = d3.max(data, (d) => {return parseInt(d.Sepal_Width)});
 		MAX_Y2 = d3.max(data, (d) => {return parseInt(d.Petal_Width)});
 
@@ -172,20 +173,31 @@ function scatterWidth() {
 				.call(d3.axisLeft(Y_SCALE2).ticks(10))
 					.attr('font-size', "12px");
 
+		// Add brushing and call the updateChart function
 		FRAME2.call(d3.brush() 
 			.extent([[MARGINS.left, MARGINS.bottom], [VIS_WIDTH+MARGINS.left, VIS_HEIGHT+MARGINS.top]])
 			.on("start brush", updateChart)
 		);
 
+		// select the class we determined in other function, and give it a name.
 		const myCircle1 = d3.selectAll('.eachpoint1')
 	    const myCircle2 = d3.selectAll('.eachpoint2')
 	    const myBar = d3.selectAll('.bar')
 
+	    // When brushed over the points in the middle graph, 
+	    // both points in the left graph and bars in the right graph will be highlighted with
+	    // a raised opacity and orange border.
 		function updateChart(event) {
 		    extent = event.selection;
-		    myCircle1.classed("selected", function(d){return isBrushed(extent, X_SCALE2(d.Sepal_Width) + MARGINS.left, Y_SCALE2(d.Petal_Width)+MARGINS.top)})
-		    myCircle2.classed("selected", function(d){return isBrushed(extent, X_SCALE2(d.Sepal_Width) + MARGINS.left, Y_SCALE2(d.Petal_Width)+MARGINS.top)})
-		    myBar.classed('selected', function(d) {return barBrushed(extent, d)})
+		    myCircle1.classed("selected", function(d){
+		    	return isBrushed(extent, X_SCALE2(d.Sepal_Width) + MARGINS.left, Y_SCALE2(d.Petal_Width)+MARGINS.top)
+		    })
+		    myCircle2.classed("selected", function(d){
+		    	return isBrushed(extent, X_SCALE2(d.Sepal_Width) + MARGINS.left, Y_SCALE2(d.Petal_Width)+MARGINS.top)
+		    })
+		    myBar.classed('selected', function(d) {
+		    	return barBrushed(extent, d)
+		    })
 		};
 
 		// A function that return TRUE or FALSE according if a dot is in the selection or not
@@ -194,7 +206,7 @@ function scatterWidth() {
 		    	x1 = brush_coords[1][0],
 		        y0 = brush_coords[0][1],
 		        y1 = brush_coords[1][1];
-		    return x0 <= cx && cx <= x1 && y0 <= cy && cy <= y1;    // This return TRUE or FALSE depending on if the points is in the selected area
+		    return x0 <= cx && cx <= x1 && y0 <= cy && cy <= y1;	// This return TRUE or FALSE depending on if the points is in the selected area
 		};
 
 		function barBrushed(brush_coords, bar) {
@@ -212,6 +224,7 @@ function scatterWidth() {
 
 }
 
+// call the functions
 scatterLength();
 scatterWidth();
 barPlot();

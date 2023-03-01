@@ -13,18 +13,19 @@ body {
   justify-content: center;
 }
 
-
+/*style the setosa class*/
 .setosa {
 	fill: mediumseagreen;
 	opacity: 50%;
 }
 
-
+/*style the versicolor class*/
 .versicolor {
 	fill: lightsalmon;
 	opacity: 50%;
 }
 
+/*style the virginica class*/
 .virginica {
 	fill: lightsteelblue;
 	opacity: 50%;
@@ -37,7 +38,7 @@ body {
   opacity: 90%;
 }
 
-/*style the title*/
+/*style the title for the graph*/
 .title {
 	font-weight: 700;
 	font-size: 20px;
