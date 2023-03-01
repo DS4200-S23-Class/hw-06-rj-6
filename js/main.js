@@ -58,10 +58,8 @@ function scatterLength(){
 					})
 					.attr("r", 6)
 					.attr('class', (d) => {return d.Species})
-					.classed("eachpoint1 halfopacity", true);
+					.classed("eachpoint1", true);
 									
-
-
 		// create x and y axes
 		FRAME1.append("g")
 				.attr('transform', 'translate(' + MARGINS.left + "," + 
@@ -93,7 +91,7 @@ function barPlot() {
 			    	.domain([0, 60])
 			    	.range([VIS_HEIGHT, 0]);
 
-		// create bar rectangles
+	// create bar rectangles
 	FRAME3.selectAll('bars')
 	      	.data(data)
 		    .enter()
@@ -120,6 +118,13 @@ function barPlot() {
 					MARGINS.left + ')')
 			.call(d3.axisLeft(Y_SCALE3).ticks(10))
 					.attr('font-size', "12px");
+
+	d3.csv("data/iris.csv").then((data) => {
+		FRAME3.data(data)
+			.enter()
+	})
+
+
 }
 
 function scatterWidth() {
@@ -151,7 +156,7 @@ function scatterWidth() {
 					})
 					.attr("r", 6)
 					.attr('class', (d) => {return d.Species})
-					.classed("eachpoint2 halfopacity", true);
+					.classed("eachpoint2", true);
 					
 
 		// create x and y axes
@@ -178,9 +183,9 @@ function scatterWidth() {
 
 		function updateChart(event) {
 		    extent = event.selection;
-		    myCircle1.classed("selected", function(d){return isBrushed(extent, X_SCALE(d.Sepal_Length) + MARGINS.left, Y_SCALE(d.Petal_Length)+MARGINS.top)})
+		    myCircle1.classed("selected", function(d){return isBrushed(extent, X_SCALE2(d.Sepal_Width) + MARGINS.left, Y_SCALE2(d.Petal_Width)+MARGINS.top)})
 		    myCircle2.classed("selected", function(d){return isBrushed(extent, X_SCALE2(d.Sepal_Width) + MARGINS.left, Y_SCALE2(d.Petal_Width)+MARGINS.top)})
-			myBar.classed("selected", function(d){return isBrushed(extent, X_SCALE3(d.Species) + MARGINS.left, Y_SCALE3(50)+MARGINS.top)})
+		    myBar.classed('selected', function(d) {return barBrushed(extent, d)})
 		};
 
 		// A function that return TRUE or FALSE according if a dot is in the selection or not
@@ -191,6 +196,18 @@ function scatterWidth() {
 		        y1 = brush_coords[1][1];
 		    return x0 <= cx && cx <= x1 && y0 <= cy && cy <= y1;    // This return TRUE or FALSE depending on if the points is in the selected area
 		};
+
+		function barBrushed(brush_coords, bar) {
+	  	let anyPointBrushed = false;
+	  	for (let n = 0; n < 150; n++) {
+	  		d = data[n];
+	  		if (isBrushed(brush_coords, X_SCALE2(d.Sepal_Width) + MARGINS.left, Y_SCALE2(d.Petal_Width)+MARGINS.top) ) {
+	  			anyPointBrushed = anyPointBrushed || (d.Species == bar.Species);
+	  		}
+	  	}
+	  	return anyPointBrushed;
+	  	};
+
 	});
 
 }
