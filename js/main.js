@@ -37,13 +37,13 @@ function scatterLength(){
 		MAX_Y = d3.max(data, (d) => {return parseInt(d.Petal_Length)});
 
 		// scale functions
-		X_SCALE = d3.scaleLinear()
-						.domain([0, MAX_X + 1])
-						.range([0, VIS_WIDTH]);
+		const X_SCALE = d3.scaleLinear()
+							.domain([0, MAX_X + 1])
+							.range([0, VIS_WIDTH]);
 
-		Y_SCALE = d3.scaleLinear()
-						.domain([0, MAX_Y + 1])
-						.range([VIS_HEIGHT, 0]);
+		const Y_SCALE = d3.scaleLinear()
+							.domain([0, MAX_Y + 1])
+							.range([VIS_HEIGHT, 0]);
 
 		// create data points
 		FRAME1.selectAll("points")
@@ -82,14 +82,14 @@ function barPlot() {
 	const data = [{Species: 'versicolor'}, {Species: 'virginica'}, {Species: 'setosa'}];
 
 	// scale functions
-	X_SCALE3 = d3.scaleBand()
-					.domain(data.map((d) => {return d.Species}))
-	  				.range([0, VIS_WIDTH])
-	  				.padding(0.2);
+	const X_SCALE3 = d3.scaleBand()
+						.domain(data.map((d) => {return d.Species}))
+		  				.range([0, VIS_WIDTH])
+		  				.padding(0.2);
 
-	Y_SCALE3 = d3.scaleLinear()
-			    	.domain([0, 60])
-			    	.range([VIS_HEIGHT, 0]);
+	const Y_SCALE3 = d3.scaleLinear()
+				    	.domain([0, 60])
+				    	.range([VIS_HEIGHT, 0]);
 
 	// create bar rectangles
 	FRAME3.selectAll('bars')
@@ -217,7 +217,7 @@ function scatterWidth() {
 		  			// assign new boolean value to anyPointBrushed with OR operater
 		  			anyPointBrushed = anyPointBrushed || (d.Species == bar.Species);
 		  		}
-	  	}
+	  		}
 	  		return anyPointBrushed;
 	  	};
 
