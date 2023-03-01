@@ -16,29 +16,25 @@ body {
 
 .setosa {
 	fill: mediumseagreen;
-
+	opacity: 50%;
 }
 
 
 .versicolor {
 	fill: lightsalmon;
-
+	opacity: 50%;
 }
 
 .virginica {
 	fill: lightsteelblue;
-
-}
-
-.halfopacity {
 	opacity: 50%;
 }
 
 /*style the point when brushing*/
 .selected {
-	stroke-width: 4px;
+	stroke-width: 3px;
   stroke: orange;
-  opacity: 75%;
+  opacity: 90%;
 }
 
 /*style the title*/
