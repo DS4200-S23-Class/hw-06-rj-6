@@ -73,7 +73,7 @@ function scatterLength(){
 				.call(d3.axisLeft(Y_SCALE).ticks(10))
 					.attr('font-size', "12px");
 	});
-}
+};
 
 // function for builidng bar plot (count of species)
 function barPlot() {
@@ -119,12 +119,7 @@ function barPlot() {
 			.call(d3.axisLeft(Y_SCALE3).ticks(10))
 					.attr('font-size', "12px");
 
-	d3.csv("data/iris.csv").then((data) => {
-		FRAME3.data(data)
-			.enter()
-	})
-
-}
+};
 
 // function for builidng scatter plot (Sepal_Width vs. Petal_Width)
 function scatterWidth() {
@@ -218,7 +213,7 @@ function scatterWidth() {
 		  		// get a single point from data
 		  		d = data[i];
 		  		if (isBrushed(brush_coords, X_SCALE2(d.Sepal_Width) + MARGINS.left, Y_SCALE2(d.Petal_Width)+MARGINS.top)) {
-		  			// check if the brushed point species is the same as bar species
+		  			// check if the brushed point species is the same as one of bar species
 		  			// assign new boolean value to anyPointBrushed with OR operater
 		  			anyPointBrushed = anyPointBrushed || (d.Species == bar.Species);
 		  		}
@@ -228,7 +223,7 @@ function scatterWidth() {
 
 	});
 
-}
+};
 
 // call the functions
 scatterLength();
