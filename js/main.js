@@ -210,14 +210,14 @@ function scatterWidth() {
 		};
 
 		function barBrushed(brush_coords, bar) {
-	  	let anyPointBrushed = false;
-	  	for (let n = 0; n < 150; n++) {
-	  		d = data[n];
-	  		if (isBrushed(brush_coords, X_SCALE2(d.Sepal_Width) + MARGINS.left, Y_SCALE2(d.Petal_Width)+MARGINS.top) ) {
-	  			anyPointBrushed = anyPointBrushed || (d.Species == bar.Species);
-	  		}
+		  	let anyPointBrushed = false;
+		  	for (let n = 0; n < 150; n++) {
+		  		d = data[n];
+		  		if (isBrushed(brush_coords, X_SCALE2(d.Sepal_Width) + MARGINS.left, Y_SCALE2(d.Petal_Width)+MARGINS.top) ) {
+		  			anyPointBrushed = anyPointBrushed || (d.Species == bar.Species);
+		  		}
 	  	}
-	  	return anyPointBrushed;
+	  		return anyPointBrushed;
 	  	};
 
 	});
