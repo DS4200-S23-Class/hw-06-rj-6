@@ -196,11 +196,11 @@ function scatterWidth() {
 		    	return isBrushed(extent, X_SCALE2(d.Sepal_Width) + MARGINS.left, Y_SCALE2(d.Petal_Width)+MARGINS.top)
 		    })
 		    myBar.classed('selected', function(d) {
-		    	return barBrushed(extent, d)
+		    	return isbarBrushed(extent, d)
 		    })
 		};
 
-		// A function that return TRUE or FALSE according if a dot is in the selection or not
+		// A function that return TRUE or FALSE by whether data point is in the selection
 		function isBrushed(brush_coords, cx, cy) {
 		    let x0 = brush_coords[0][0],
 		    	x1 = brush_coords[1][0],
@@ -209,11 +209,17 @@ function scatterWidth() {
 		    return x0 <= cx && cx <= x1 && y0 <= cy && cy <= y1;	// This return TRUE or FALSE depending on if the points is in the selected area
 		};
 
-		function barBrushed(brush_coords, bar) {
+		// A specific function for bar that return TRUE or FALSE by whether the corresponding point of bar is in the selection
+		function isbarBrushed(brush_coords, bar) {
+			// initialize anyPointBrushed as False: 
+			// if it's not selected, don't add class "selected" on myBar
 		  	let anyPointBrushed = false;
-		  	for (let n = 0; n < 150; n++) {
-		  		d = data[n];
-		  		if (isBrushed(brush_coords, X_SCALE2(d.Sepal_Width) + MARGINS.left, Y_SCALE2(d.Petal_Width)+MARGINS.top) ) {
+		  	for (let i = 0; i < 150; i++) {
+		  		// get a single point from data
+		  		d = data[i];
+		  		if (isBrushed(brush_coords, X_SCALE2(d.Sepal_Width) + MARGINS.left, Y_SCALE2(d.Petal_Width)+MARGINS.top)) {
+		  			// check if the brushed point species is the same as bar species
+		  			// assign new boolean value to anyPointBrushed with OR operater
 		  			anyPointBrushed = anyPointBrushed || (d.Species == bar.Species);
 		  		}
 	  	}
